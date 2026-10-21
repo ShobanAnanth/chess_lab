@@ -11,6 +11,8 @@ namespace Student
 {
     class KingPiece : public ChessPiece
     {
+    public:
+        using ChessPiece::ChessPiece;
     };
 }
 

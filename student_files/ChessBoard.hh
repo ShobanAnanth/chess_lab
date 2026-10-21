@@ -129,6 +129,8 @@ namespace Student
          * An output stream containing the full board layout.
          */
         std::ostringstream displayBoard();
+
+        ~ChessBoard();
     };
 }
 
