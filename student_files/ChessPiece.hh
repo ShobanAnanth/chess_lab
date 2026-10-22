@@ -9,7 +9,14 @@
 
   class ChessPiece
   {
-  public:
+  private:
+    ChessBoard& board;
+    Color color; 
+    Type type; 
+    int row;
+    int column;
+  
+    public:
     /**
      * @brief
      * Constructor for ChessPiece.
@@ -22,7 +29,7 @@
      * @param column
      * Starting column of the piece.
      */
-    ChessPiece(ChessBoard &board, Color color, int row, int column);
+    ChessPiece(ChessBoard &board, Color color, int row, int column, Type type);
     /**
      * @brief
      * Default destructor for ChessPiece.
@@ -90,6 +97,10 @@
      * A unicode representation of the piece.
      */
     virtual const char *toString() = 0;
+
+    ChessBoard& getBoard() {
+    return board;
+  }
   };
 }
 
