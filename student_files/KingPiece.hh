@@ -9,11 +9,17 @@
  */
 namespace Student
 {
-    class KingPiece : public ChessPiece
+     class KingPiece : public ChessPiece
     {
     public:
-        using ChessPiece::ChessPiece;
+        KingPiece(ChessBoard &board, Color color, int row, int column)
+            : ChessPiece(board, color, row, column, King) {}
+
+        bool canMoveToLocation(int toRow, int toColumn) override { return false; }
+
+        const char *toString() override { return getColor() == White ? "♔" : "♚"; }
     };
+
 }
 
 #endif

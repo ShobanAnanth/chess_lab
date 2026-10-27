@@ -9,11 +9,15 @@
  */
 namespace Student
 {
-    class RookPiece : public ChessPiece
-    {
+    class RookPiece : public ChessPiece {
     public:
-        using ChessPiece::ChessPiece;
+        RookPiece(ChessBoard &board, Color color, int row, int column);
+
+        bool canMoveToLocation(int toRow, int toColumn) override;
+
+        const char* toString() override;
     };
+
 }
 
 #endif
