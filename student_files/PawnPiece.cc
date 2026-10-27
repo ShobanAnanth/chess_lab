@@ -65,7 +65,6 @@ bool PawnPiece::canMoveToLocation(int toRow, int toColumn) {
         }
     }
 
-    return false;
 
 // check if one move
     // check diagonal capture
