@@ -63,8 +63,42 @@ void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startCol
 
 bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn)
 {
- 
-    return false;
+    // check if move is valid
+    if (!isValidMove(fromRow, fromColumn, toRow, toColumn)) {
+        return false;
+    }
+
+    if (fromRow == toRow && fromColumn == toColumn) {
+        return false;
+    }
+
+    ChessPiece* piece = board[fromRow][fromColumn];
+
+    // check if its this pieces turn
+    if (piece->getColor() != turn) {
+        return false;
+    }
+
+    // remove opponent piece if capturing
+    if (board[toRow][toColumn] != nullptr) {
+        delete board[toRow][toColumn];
+    }
+
+    // move piece to new position
+    board[toRow][toColumn] = piece;
+    board[fromRow][fromColumn] = nullptr;
+
+    piece->setPosition(toRow, toColumn);
+
+    // switch turns
+    if (turn == White) {
+        turn = Black;
+    }
+    else {
+        turn = White;
+    }
+
+    return true;
 }
 
 bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColumn)
