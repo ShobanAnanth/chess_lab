@@ -86,7 +86,26 @@ bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColum
 
 bool ChessBoard::isPieceUnderThreat(int row, int column)
 {
+    if (row < 0 || row >= numRows || column < 0 || column >= numCols) {
+        return false;
+    }
+    ChessPiece *target = board.at(row).at(column);
+    if (target == nullptr) {
+        return false;
+    }
 
+    //a piece is threatened if any opponent piece can move onto its square.
+    for (int r = 0; r < numRows; r++) {
+        for (int c = 0; c < numCols; c++) {
+            ChessPiece *piece = board.at(r).at(c);
+            if (piece == nullptr || piece->getColor() == target->getColor()) {
+                continue;
+            }
+            if (isValidMove(r, c, row, column)) {
+                return true;
+            }
+        }
+    }
     return false;
 }
 

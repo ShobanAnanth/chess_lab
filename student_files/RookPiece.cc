@@ -41,7 +41,7 @@ bool RookPiece::canMoveToLocation(int toRow, int toColumn) {
         col += colDirection;
     }
 
-    //checks destination sppiot
+    //check destination spot
     ChessPiece* target = getBoard().getPiece(toRow, toColumn);
     if (target != nullptr && target->getColor() == getColor()) {
         return false; // cannot capture own piece
