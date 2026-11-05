@@ -6,12 +6,17 @@
 
 using Student::ChessBoard;
 
+
+//derived class
 ChessBoard::ChessBoard(int numRow, int numCol)
     : numRows(numRow),
       numCols(numCol),
       board(numRow, std::vector<ChessPiece *>(numCol, nullptr))
 {
-    // The board is now sized, and every square starts empty.
+  
+    
+
+
 }
 
 ChessBoard::~ChessBoard()
@@ -25,18 +30,17 @@ ChessBoard::~ChessBoard()
 
 void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startColumn)
 {
-    //Check that the starting position is within the board.
+  
     if (startRow < 0 || startRow >= numRows || startColumn < 0 || startColumn >= numCols) {
         return;
     }
 
-    //Delete any piece already at this position.
     if (board[startRow][startColumn] != nullptr) {
         delete board[startRow][startColumn];
         board[startRow][startColumn] = nullptr; 
     }
 
-    //creates the requested piece type  and store it at this position.
+
     switch (ty) {
         case Type::Pawn:
             board[startRow][startColumn] =
@@ -59,9 +63,7 @@ void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startCol
 
 bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn)
 {
-    // TODO: Check bounds, piece presence, whose turn it is, and whether the
-    // move is valid. If valid, update the board and the piece's position.
-    // TODO: Update the turn after a successful move.
+ 
     return false;
 }
 
@@ -84,8 +86,7 @@ bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColum
 
 bool ChessBoard::isPieceUnderThreat(int row, int column)
 {
-    // TODO: Check bounds and that a piece exists at this position.
-    // TODO: Check whether any opposing piece can legally move to this square.
+
     return false;
 }
 

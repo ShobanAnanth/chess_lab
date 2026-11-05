@@ -15,22 +15,21 @@ const char* RookPiece::toString() {
 }
 
 bool RookPiece::canMoveToLocation(int toRow, int toColumn) {
-    // check the board bounds, are we inside?
+    // checking the board bounds -- has to be inside
     if (toRow < 0 || toRow >= getBoard().getNumRows() ||
         toColumn < 0 || toColumn >= getBoard().getNumCols()) {
         return false;
     }
 
-    // check if the move is in a straight line
+
     if (getRow() != toRow && getColumn() != toColumn) {
         return false;
     }
 
-    // determine the direction of movement
     int rowDirection = (toRow > getRow()) ? 1 : (toRow < getRow()) ? -1 : 0;
     int colDirection = (toColumn > getColumn()) ? 1 : (toColumn < getColumn()) ? -1 : 0;
 
-    // check for any pieces blocking the path
+    //check for any pieces blockingd the path
     int row = getRow() + rowDirection;
     int col = getColumn() + colDirection;
 
@@ -42,7 +41,7 @@ bool RookPiece::canMoveToLocation(int toRow, int toColumn) {
         col += colDirection;
     }
 
-    // check destination square
+    //checks destination sppiot
     ChessPiece* target = getBoard().getPiece(toRow, toColumn);
     if (target != nullptr && target->getColor() == getColor()) {
         return false; // cannot capture own piece
