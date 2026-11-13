@@ -41,6 +41,7 @@ void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startCol
     }
 
 
+
     switch (ty) {
         case Type::Pawn:
             board[startRow][startColumn] =
@@ -146,13 +147,13 @@ bool ChessBoard::isPieceUnderThreat(int row, int column)
 std::ostringstream ChessBoard::displayBoard()
 {
     std::ostringstream outputString;
-    // top scale
+    //top scale
     outputString << "  ";
     for (int i = 0; i < numCols; i++){
         outputString << i << " ";
     }
     outputString << std::endl << "  ";
-    // top border
+    //top border
     for (int i = 0; i < numCols; i++){
         outputString << "– ";
     }
