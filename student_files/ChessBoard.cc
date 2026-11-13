@@ -111,12 +111,51 @@ bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColum
     if (toRow < 0 || toRow >= numRows || toColumn < 0 || toColumn >= numCols) {
         return false;
     }
+    if (fromRow == toRow && fromColumn == toColumn) {
+        return false;
+    }
     ChessPiece *piece = board.at(fromRow).at(fromColumn);
     if (piece == nullptr) {
         return false;
     }
-    return piece->canMoveToLocation(toRow, toColumn);
-    // there. Include any rules about capturing or blocking other pieces.
+    if (!piece->canMoveToLocation(toRow, toColumn)) {
+        return false;
+    }
+
+    // temporarily make the move to see if our king would be in check
+    ChessPiece *captured = board.at(toRow).at(toColumn);
+    board.at(toRow).at(toColumn) = piece;
+    board.at(fromRow).at(fromColumn) = nullptr;
+    piece->setPosition(toRow, toColumn);
+
+    // find this color's king after the temporary move
+    int kingRow = -1;
+    int kingCol = -1;
+    for (int r = 0; r < numRows; r++) {
+        for (int c = 0; c < numCols; c++) {
+            ChessPiece *p = board.at(r).at(c);
+            if (p != nullptr && p->getType() == King && p->getColor() == piece->getColor()) {
+                kingRow = r;
+                kingCol = c;
+            }
+        }
+    }
+
+    bool leavesInCheck = false;
+    if (kingRow != -1) {
+        leavesInCheck = isPieceUnderThreat(kingRow, kingCol);
+    }
+
+    // undo the temporary move
+    board.at(fromRow).at(fromColumn) = piece;
+    board.at(toRow).at(toColumn) = captured;
+    piece->setPosition(fromRow, fromColumn);
+
+    if (leavesInCheck) {
+        return false;
+    }
+
+    return true;
 }
 
 bool ChessBoard::isPieceUnderThreat(int row, int column)
@@ -129,14 +168,15 @@ bool ChessBoard::isPieceUnderThreat(int row, int column)
         return false;
     }
 
-    //a piece is threatened if any opponent piece can move onto its square.
+    // only check if an opponent piece can attack this square,
+    // even if that opponent piece could not legally move due to check
     for (int r = 0; r < numRows; r++) {
         for (int c = 0; c < numCols; c++) {
             ChessPiece *piece = board.at(r).at(c);
             if (piece == nullptr || piece->getColor() == target->getColor()) {
                 continue;
             }
-            if (isValidMove(r, c, row, column)) {
+            if (piece->canMoveToLocation(row, column)) {
                 return true;
             }
         }

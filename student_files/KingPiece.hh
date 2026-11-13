@@ -9,15 +9,14 @@
  */
 namespace Student
 {
-     class KingPiece : public ChessPiece
+    class KingPiece : public ChessPiece
     {
     public:
-        KingPiece(ChessBoard &board, Color color, int row, int column)
-            : ChessPiece(board, color, row, column, King) {}
+        KingPiece(ChessBoard &board, Color color, int row, int column);
 
-        bool canMoveToLocation(int toRow, int toColumn) override { return false; }
+        bool canMoveToLocation(int toRow, int toColumn) override;
 
-        const char *toString() override { return getColor() == White ? "♔" : "♚"; }
+        const char *toString() override;
     };
 
 }
