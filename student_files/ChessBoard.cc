@@ -123,6 +123,7 @@ bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColum
     }
 
     // temporarily make the move to see if our king would be in check
+    // keep the old piece here so we can put it back if needed
     ChessPiece *captured = board.at(toRow).at(toColumn);
     board.at(toRow).at(toColumn) = piece;
     board.at(fromRow).at(fromColumn) = nullptr;
@@ -141,6 +142,7 @@ bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColum
         }
     }
 
+    // no king found means nothing to check here
     bool leavesInCheck = false;
     if (kingRow != -1) {
         leavesInCheck = isPieceUnderThreat(kingRow, kingCol);
@@ -151,6 +153,7 @@ bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColum
     board.at(toRow).at(toColumn) = captured;
     piece->setPosition(fromRow, fromColumn);
 
+    // cant leave our king exposed, even if the piece itself can move
     if (leavesInCheck) {
         return false;
     }
@@ -163,6 +166,7 @@ bool ChessBoard::isPieceUnderThreat(int row, int column)
     if (row < 0 || row >= numRows || column < 0 || column >= numCols) {
         return false;
     }
+    // no piece at this spot means nothing to threaten
     ChessPiece *target = board.at(row).at(column);
     if (target == nullptr) {
         return false;

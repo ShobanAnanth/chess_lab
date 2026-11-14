@@ -3,11 +3,13 @@
 
 using namespace Student;
 
+// pass the starting info to chesspiece
 KingPiece::KingPiece(ChessBoard &board, Color color, int row, int column)
     : ChessPiece(board, color, row, column, King)
 {
 }
 
+// return the symbol based on color
 const char *KingPiece::toString()
 {
     if (getColor() == White) {
@@ -24,9 +26,11 @@ bool KingPiece::canMoveToLocation(int toRow, int toColumn)
         return false;
     }
 
+    // difference between where we are and where we wanna go
     int rowDiff = toRow - getRow();
     int colDiff = toColumn - getColumn();
 
+    // only care about distance here, not direction
     if (rowDiff < 0) {
         rowDiff = -rowDiff;
     }
@@ -38,6 +42,7 @@ bool KingPiece::canMoveToLocation(int toRow, int toColumn)
     if (rowDiff > 1 || colDiff > 1) {
         return false;
     }
+    // cant just stay in the same spot :)
     if (rowDiff == 0 && colDiff == 0) {
         return false;
     }
@@ -48,5 +53,6 @@ bool KingPiece::canMoveToLocation(int toRow, int toColumn)
         return false;
     }
 
+    // empty square or an opponent piece, so this works
     return true;
 }
